@@ -6,15 +6,18 @@ const userHandler = require("./routeHandler/userHandler");
 
 // express app initialization
 const app = express();
-dotenv.config()
+dotenv.config();
 app.use(express.json());
 
 // database connection with mongoose
 mongoose
-  .connect("mongodb://localhost/todos", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(
+    `mongodb+srv://anis:anis123@cluster0.c8lf0v2.mongodb.net/primeDatabase?retryWrites=true&w=majority`,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
   .then(() => console.log("connection successful"))
   .catch((err) => console.log(err));
 
@@ -28,10 +31,13 @@ const errorHandler = (err, req, res, next) => {
     return next(err);
   }
   res.status(500).json({ error: err });
-}
+};
 
 app.use(errorHandler);
 
-app.listen(3000, () => {
-  console.log("app listening at port 3000");
+app.listen(5000, () => {
+  console.log("app listening at port 5000");
+});
+app.get("/", (req, res) => {
+  res.send("dmf server two is running");
 });

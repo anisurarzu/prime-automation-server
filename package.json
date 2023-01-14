@@ -3,19 +3,29 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon index.js",
+    "start": "node index.js",
+    "start-dev": "nodemon index.js",
     "production": "NODE_ENV=production nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "Sumit Saha <sumit.analyzen@gmail.com>",
   "license": "UNLICENSED",
-  "description": "[![Youtube][youtube-shield]][youtube-url] [![Facebook][facebook-shield]][facebook-url] [![Instagram][instagram-shield]][instagram-url] [![LinkedIn][linkedin-shield]][linkedin-url]",
+  "description": "",
   "dependencies": {
     "bcrypt": "^5.0.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.12.2"
-  }
+    "mongoose": "^5.12.2",
+    "nodemon": "^2.0.20"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anisurarzu/prime-automation-server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/anisurarzu/prime-automation-server/issues"
+  },
+  "homepage": "https://github.com/anisurarzu/prime-automation-server#readme"
 }
