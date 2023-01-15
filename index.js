@@ -5,9 +5,11 @@ const todoHandler = require("./routeHandler/todoHandler");
 const userHandler = require("./routeHandler/userHandler");
 
 // express app initialization
-const app = express();
+const cors = require("cors");
+
 dotenv.config();
 app.use(express.json());
+app.use(cors());
 
 // database connection with mongoose
 mongoose
