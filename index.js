@@ -9,7 +9,11 @@ const cors = require("cors");
 
 dotenv.config();
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: "https://prime-automation-server-production.up.railway.app",
+  })
+);
 
 // database connection with mongoose
 mongoose
