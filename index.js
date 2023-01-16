@@ -1,15 +1,15 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const cors = require("cors");
 const dotenv = require("dotenv");
+const cors = require("cors");
 const todoHandler = require("./routeHandler/todoHandler");
 const userHandler = require("./routeHandler/userHandler");
 
 // express app initialization
 
 dotenv.config();
-app.use(cors());
 app.use(express.json());
+app.use(cors());
 
 // database connection with mongoose
 mongoose
