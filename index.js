@@ -1,19 +1,15 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 const dotenv = require("dotenv");
 const todoHandler = require("./routeHandler/todoHandler");
 const userHandler = require("./routeHandler/userHandler");
 
 // express app initialization
-const cors = require("cors");
 
 dotenv.config();
+app.use(cors());
 app.use(express.json());
-app.use(
-  cors({
-    origin: "https://prime-automation-server-production.up.railway.app",
-  })
-);
 
 // database connection with mongoose
 mongoose
