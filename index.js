@@ -46,7 +46,7 @@ async function run() {
     });
 
     // update product
-    app.put("/users", async (req, res) => {
+    app.put("/product", async (req, res) => {
       const product = req.body;
       const filter = { _id: ObjectId(product?._id) };
       const options = { upsert: true };
