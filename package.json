@@ -1,25 +1,21 @@
 {
-  "name": "express-tutorial",
+  "name": "lof-server-two",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "start-dev": "nodemon index.js",
-    "production": "NODE_ENV=production nodemon index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "Sumit Saha <sumit.analyzen@gmail.com>",
-  "license": "UNLICENSED",
-  "description": "",
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
-    "dotenv": "^8.2.0",
-    "express": "^4.17.1",
-    "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.12.2",
-    "nodemon": "^2.0.20"
+    "dotenv": "^10.0.0",
+    "express": "^4.18.2",
+    "mongodb": "^4.13.0",
+    "nodemon": "^2.0.20",
+    "stripe": "^8.222.0"
   },
   "repository": {
     "type": "git",
@@ -28,5 +24,6 @@
   "bugs": {
     "url": "https://github.com/anisurarzu/prime-automation-server/issues"
   },
-  "homepage": "https://github.com/anisurarzu/prime-automation-server#readme"
+  "homepage": "https://github.com/anisurarzu/prime-automation-server#readme",
+  "description": ""
 }
