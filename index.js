@@ -50,7 +50,7 @@ async function run() {
       const product = req.body;
       const filter = { _id: ObjectId(product?._id) };
       const options = { upsert: true };
-      const updateDoc = { $set: user };
+      const updateDoc = { $set: product };
       const result = await productCollection.updateOne(
         filter,
         updateDoc,
