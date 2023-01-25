@@ -8,6 +8,8 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 const bcrypt = require("bcrypt");
+const crypto = require("crypto");
+const jwt = require("jsonwebtoken");
 const saltRounds = 10;
 // middleware
 
@@ -24,6 +26,21 @@ const client = new MongoClient(uri, {
   useUnifiedTopology: true,
 });
 
+// middle ware
+function verifyToken(req, res, next) {
+  const token = req.headers["authorization"];
+  if (!token) {
+    return res.status(401).json("Access Denied");
+  }
+  try {
+    const verified = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = verified;
+    next();
+  } catch (err) {
+    res.status(400).json("Invalid Token");
+  }
+}
+
 async function run() {
   try {
     await client.connect();
@@ -32,12 +49,18 @@ async function run() {
     const userCollection = database.collection("users");
 
     //post product
-    // users post api
-    app.post("/product", async (req, res) => {
+
+    app.post("/product", verifyToken, async (req, res) => {
       const product = req.body;
       const result = await productCollection.insertOne(product);
       res.json(result);
     });
+
+    /* app.post("/product", async (req, res) => {
+      const product = req.body;
+      const result = await productCollection.insertOne(product);
+      res.json(result);
+    }); */
     //register
     app.post("/register", async (req, res) => {
       const { firstName, lastName, email, password } = req.body;
@@ -60,24 +83,55 @@ async function run() {
       });
     });
 
+    // login
     app.post("/login", async (req, res) => {
-      const { name, email, password } = req.body;
+      const { email, password } = req.body;
       const query = { email: email };
       const userList = await userCollection.findOne(query);
-      const data = {
-        firstName: userList.firstName,
-        lastName: userList.lastName,
-        email: userList.email,
-        id: userList._id,
-        role: userList.role,
+      const resData = {
+        firstName: userList?.firstName,
+        lastName: userList?.lastName,
+        email: userList?.email,
+        id: userList?._id,
+        role: userList?.role,
       };
       bcrypt.compare(password, userList.password, function (err, result) {
         if (result === true) {
-          res.status(200).json(data);
+          const token = jwt.sign(
+            {
+              email,
+            },
+            process.env.JWT_SECRET,
+            {
+              expiresIn: "2h",
+            }
+          );
+          res.status(200).json({ ...resData, token });
         } else {
           res.status(401).json("Invalid login id or password");
         }
       });
+    });
+
+    // app.use(verifyToken);
+
+    function verifyToken(req, res, next) {
+      const token = req.headers["authorization"];
+      if (!token) {
+        return res.status(401).json("Access Denied");
+      }
+      try {
+        const verified = jwt.verify(token, process.env.JWT_SECRET);
+        req.user = verified;
+        next();
+      } catch (err) {
+        res.status(400).json("Invalid Token");
+      }
+    }
+    // logout
+
+    app.post("/logout", (req, res) => {
+      res.status(200).json("Logged out successfully");
     });
 
     // set user role
