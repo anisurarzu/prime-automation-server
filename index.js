@@ -27,6 +27,9 @@ const client = new MongoClient(uri, {
 });
 
 // middle ware
+
+// app.use(verifyToken);
+
 function verifyToken(req, res, next) {
   const token = req.headers["authorization"];
   if (!token) {
@@ -55,12 +58,6 @@ async function run() {
       const result = await productCollection.insertOne(product);
       res.json(result);
     });
-
-    /* app.post("/product", async (req, res) => {
-      const product = req.body;
-      const result = await productCollection.insertOne(product);
-      res.json(result);
-    }); */
     //register
     app.post("/register", async (req, res) => {
       const { firstName, lastName, email, password } = req.body;
@@ -113,21 +110,6 @@ async function run() {
       });
     });
 
-    // app.use(verifyToken);
-
-    function verifyToken(req, res, next) {
-      const token = req.headers["authorization"];
-      if (!token) {
-        return res.status(401).json("Access Denied");
-      }
-      try {
-        const verified = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = verified;
-        next();
-      } catch (err) {
-        res.status(400).json("Invalid Token");
-      }
-    }
     // logout
 
     app.post("/logout", (req, res) => {
